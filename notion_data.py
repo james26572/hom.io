@@ -75,7 +75,7 @@ def getCustomerInfo():
         college = row.college.data['select']['name'] if row.college.data['select'] is not None else "N/A"
         accommodation_type = row.accomtype.data['select']['name'] if row.accomtype.data['select'] is not None else "N/A"
         required_facilities = row.requiredFacilities.get_text()
-        max_price = row.maxPrice.data['number'] if row.maxPrice.data['number'] is not None else "N/A"
+        max_price = row.maxPrice.data['number'] if row.maxPrice.data['number'] is not None else float("-inf")
         
         currentCustomer = Customer(name,college,accommodation_type,required_facilities,max_price)
         listOfCustomers.append(currentCustomer)
@@ -87,14 +87,14 @@ def getHomeOwnerInfo():
     listOfHomeOwners = []
     for row in my_data.items():
         name = row.name.get_text() if row.name.get_text() != "" else "N/A"
-        distFromTrinity = row.distanceFromTrinity.data['number'] if row.distanceFromTrinity.data['number'] is not None else "N/A"
+        distFromTrinity = row.distanceFromTrinity.data['number'] if row.distanceFromTrinity.data['number'] is not None else float("inf")
         accomType = row.acomType.get_text()
         
-        distanceFromDCU = row.distanceFromDCU.data['number'] if row.distanceFromDCU.data['number'] is not None else "N/A"
-        distanceFromUCD = row.distanceFromUCD.data['number'] if row.distanceFromUCD.data['number'] is not None else "N/A"
+        distanceFromDCU = row.distanceFromDCU.data['number'] if row.distanceFromDCU.data['number'] is not None else float("inf")
+        distanceFromUCD = row.distanceFromUCD.data['number'] if row.distanceFromUCD.data['number'] is not None else float("inf")
         nearbyFacilities = row.nearbyFacilities.get_text()
-        minPrice = row.minPrice.data['number'] if row.minPrice.data['number'] is not None else "N/A"
-        homeOwner = HomeOwner(name,distFromTrinity,distanceFromDCU,distanceFromUCD,nearbyFacilities,minPrice=minPrice)
+        minPrice = row.minPrice.data['number'] if row.minPrice.data['number'] is not None else float("-inf")
+        homeOwner = HomeOwner(name,distFromTrinity,distanceFromDCU,distanceFromUCD,nearbyFacilities,minPrice=minPrice,hometype=accomType)
         listOfHomeOwners.append(homeOwner)
     return listOfHomeOwners
 

@@ -3,7 +3,7 @@ class Customer:
     college = ""
     accommodation_type = ""
     required_facilities = []
-    maxPrice = ""
+    maxPrice = float("-inf")
     def __init__(self,name,college,accommodation_type,required_facilities,max_price):
         self.name = name
         self.college = college
