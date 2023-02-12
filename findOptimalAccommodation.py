@@ -37,6 +37,9 @@ def optimize(studentsInfo,homeOwnersInfo):
             
     return pairings
 
+
+optimize(studentsInfo=studentsInfo,homeOwnersInfo=homeOwnersInfo)
+
 '''
 pairings = optimize(studentsInfo,homeOwnersInfo)
 for idx,student in enumerate(studentsInfo):
