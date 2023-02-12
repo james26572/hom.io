@@ -1,5 +1,7 @@
 
 from notion_data import getCustomerInfo, getHomeOwnerInfo
+from writeToDataBase import addAllocationToDataBase,new_page
+
 
 
 studentsInfo = getCustomerInfo()
@@ -30,18 +32,19 @@ def optimize(studentsInfo,homeOwnersInfo):
             for facility in student.required_facilities:
                 if facility not in home.nearby_facilities:
                     continue
-            pairings[student].append(home)
+            pairings[student].append(home.email)
+        addAllocationToDataBase(new_page=new_page,studentName=student.name,homeOwnerEmail=pairings[student])
             
     return pairings
 
-
+'''
 pairings = optimize(studentsInfo,homeOwnersInfo)
 for idx,student in enumerate(studentsInfo):
     print("Optimal allocations for student ",student.name)
     if(len(pairings[student])==0):
         print("No optimal allocations")
-    for house in pairings[student]:
-        print("House owner name ",house.name)
+    for housename in pairings[student]:
+        print("House owner name ",housename)
     
-    
+'''
 

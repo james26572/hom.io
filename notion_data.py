@@ -5,7 +5,7 @@ from homeOwner import HomeOwner
 
 from basic_notion.query import Query
 from basic_notion.page import NotionPage, NotionPageList
-from basic_notion.field import SelectField, TitleField, MultiSelectField,NumberField
+from basic_notion.field import SelectField, TitleField, MultiSelectField,NumberField,EmailField
 
 # First define models
 
@@ -20,7 +20,8 @@ class MyRow(NotionPage):
     distanceFromUCD = NumberField(property_name="Distance from UCD")
     nearbyFacilities = MultiSelectField(property_name="Nearby Facilities")
     minPrice = NumberField(property_name="Min Price")
-    acomType = MultiSelectField(property_name="Accommodation Type")
+    acomType = SelectField(property_name="Accommodation Type")
+    email = EmailField(property_name="Email")
     # ... your other fields go here
     # See your database's schema and the available field classes
     # in basic_notion.field to define this correctly.
@@ -88,13 +89,17 @@ def getHomeOwnerInfo():
     for row in my_data.items():
         name = row.name.get_text() if row.name.get_text() != "" else "N/A"
         distFromTrinity = row.distanceFromTrinity.data['number'] if row.distanceFromTrinity.data['number'] is not None else float("inf")
-        accomType = row.acomType.get_text()
+        accomType = row.acomType.data['select']['name'] if row.acomType.data['select'] is not None else "N/A"
         
         distanceFromDCU = row.distanceFromDCU.data['number'] if row.distanceFromDCU.data['number'] is not None else float("inf")
         distanceFromUCD = row.distanceFromUCD.data['number'] if row.distanceFromUCD.data['number'] is not None else float("inf")
         nearbyFacilities = row.nearbyFacilities.get_text()
         minPrice = row.minPrice.data['number'] if row.minPrice.data['number'] is not None else float("-inf")
-        homeOwner = HomeOwner(name,distFromTrinity,distanceFromDCU,distanceFromUCD,nearbyFacilities,minPrice=minPrice,hometype=accomType)
+        email = row.email.data['email'] if row.email.data is not None else "N/A"
+        
+        homeOwner = HomeOwner(name,distFromTrinity,distanceFromDCU,distanceFromUCD,nearbyFacilities,minPrice=minPrice,hometype=accomType,email=email)
+        
         listOfHomeOwners.append(homeOwner)
     return listOfHomeOwners
 
+getHomeOwnerInfo()

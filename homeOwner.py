@@ -6,7 +6,8 @@ class HomeOwner:
     nearby_facilities = set()
     min_price = None
     home_type = None
-    def __init__(self,name,trinDist,DCUDist,UCDDist,*facilities,minPrice,hometype):
+    email = None
+    def __init__(self,name,trinDist,DCUDist,UCDDist,*facilities,minPrice,hometype,email):
         self.name = name
         self.distanceFromTrinity = trinDist
         self.distanceFromDCU = DCUDist
@@ -14,3 +15,4 @@ class HomeOwner:
         self.nearby_facilities = set(list(facilities)[0])
         self.min_price = minPrice
         self.home_type = hometype
+        self.email = email
